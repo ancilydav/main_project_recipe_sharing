@@ -44,11 +44,38 @@ const Recipedetails = () => {
     return <h2>Recipe not found</h2>;
   }
 
-  // Hands-free cooking
+  
+
+  
+  const ingredientsList = (() => {
+    if (!recipe) return [];
+    const raw = recipe.ingredients || [];
+    if (Array.isArray(raw)) return raw.filter(Boolean);
+    if (typeof raw === "string") {
+      return raw
+        .split(/\r?\n|;|\||,/) 
+        .map((s) => s.trim())
+        .filter(Boolean);
+    }
+    return [];
+  })();
+
+  const stepsList = (() => {
+    if (!recipe) return [];
+    const raw = recipe.steps || recipe.preparation || [];
+    if (Array.isArray(raw)) return raw.filter(Boolean);
+    if (typeof raw === "string") {
+      return raw
+        .split(/\r?\n|;|\||,/) 
+        .map((s) => s.trim())
+        .filter(Boolean);
+    }
+    return [];
+  })();
 
   const speakSteps = () => {
-    const ingredients = recipe.ingredients || [];
-    const steps = recipe.steps || recipe.preparation || [];
+    const ingredients = ingredientsList || [];
+    const steps = stepsList || [];
     const allSteps = [
       "Ingredients are",
       ...ingredients,
@@ -93,31 +120,61 @@ const Recipedetails = () => {
   
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4">{recipe.name}</h1>
-      <img src={recipe.image} className="w-100 h-80 object-cover rounded" />
-      <h2 className="text-xl font-semibold mt-4">Ingredients</h2>
-      <ul>
-        {recipe.ingredients.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-      <h2 className="text-xl mt-4 font-bold">Preparation Steps</h2>
-      <ul>
-        {(recipe.steps || recipe.preparation || []).map((preparation, index) => (
-          <li key={index}>{preparation}</li>
-        ))}
-      </ul>
-      <p className="text-l font-semibold mt-4">Time:{recipe.time}</p>
-      <p className="text-l font-semibold">Difficulty:{recipe.difficulty}</p>
+    <div className="p-6 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-6 items-start bg-white/5 backdrop-blur-sm rounded-xl shadow-lg p-6">
+        <div className="relative overflow-hidden rounded-lg">
+          <img
+            src={recipe.image}
+            alt={recipe.name}
+            className="w-full h-96 object-cover transform transition-transform duration-500 hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+            <div>
+              <h1 className="text-2xl md:text-3xl font-extrabold text-white drop-shadow-lg">
+                {recipe.name}
+              </h1>
+                <div className="mt-2 flex gap-2">
+                  <span className="bg-white/10 text-white text-sm px-3 py-1 rounded-full">⏱ {recipe.time}</span>
+                  <span className="bg-white/10 text-white text-sm px-3 py-1 rounded-full">🔥 {recipe.difficulty}</span>
+                </div>
+            </div>
+          </div>
+        </div>
 
-      <button
-       onClick={speakSteps}
-       className="bg-purple-500 text-white px-4 py-2 rounded mt-4 hover:bg-purple-700">
-       {isSpeaking ? "⏹ Stop Hands-free" : "🔈 Hands-free Cooking"}
-      </button>
+        <div className="space-y-4 text-left">
+          <div className="flex flex-col gap-3">
+            <h2 className="text-xl font-semibold">Ingredients</h2>
+            <ul className="flex flex-wrap gap-2 list-none p-0 m-0">
+              {ingredientsList.map((item, index) => (
+                <li key={index} className="ingredient-chip bg-amber-50/50 text-amber-800 px-3 py-1 rounded-full text-sm shadow-sm">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-      <Timer />
+          <div>
+            <h2 className="text-xl font-semibold">Preparation Steps</h2>
+            <ol className="mt-3 list-decimal list-inside space-y-3 text-gray-800">
+              {stepsList.map((preparation, index) => (
+                <li key={index} className="leading-relaxed">{preparation}</li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="flex items-center gap-3 mt-2">
+            <button
+              onClick={speakSteps}
+              className="px-4 py-2 rounded-md bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md hover:scale-105 transform transition">
+              {isSpeaking ? "⏹ Stop Hands-free" : "🔈 Hands-free Cooking"}
+            </button>
+
+            <div className="ml-auto">
+              <Timer />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

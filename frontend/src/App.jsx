@@ -12,25 +12,27 @@ import Register from "./Pages/Register";
 
 const App = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/recipe/:id" element={<RecipeDetails />} />
-        <Route path="/register" element={<Register/>}/>
-        <Route path="/login" element={<Login />} />
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/recipe/:id" element={<RecipeDetails />} />
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/login" element={<Login />} />
 
-        <Route path="/favourites" element={<ProtectedRoute><Favourites /></ProtectedRoute>}/>
-        <Route
-          path="/myrecipes"
-          element={
-            <ProtectedRoute>
-              <UserRecipe />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-      <Footer/>
+          <Route path="/favourites" element={<ProtectedRoute><Favourites /></ProtectedRoute>}/>
+          <Route
+            path="/myrecipes"
+            element={
+              <ProtectedRoute>
+                <UserRecipe />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </main>
+      <Footer />
     </div>
   );
 };
