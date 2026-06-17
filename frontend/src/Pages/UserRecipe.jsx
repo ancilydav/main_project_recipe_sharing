@@ -140,8 +140,8 @@ const UserRecipe = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-4">
-      <h2 className="text-lg font-bold mb-4">Add Recipe</h2>
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/30">
+      <h2 className="text-lg font-extrabold mb-4 text-emerald-700">Add Recipe</h2>
       <div className="space-y-4 mb-8">
         {/* title */}
         <input
@@ -149,14 +149,14 @@ const UserRecipe = () => {
           placeholder="Recipe Name"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="border p-2 w-full rounded"
+          className="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
         />
 
         {/* Diet */}
         <select
           value={diet}
           onChange={(e) => setDiet(e.target.value)}
-          className="border p-2 w-full rounded"
+          className="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
         >
           <option value="">Select Diet</option>
           <option value="Veg">Veg</option>
@@ -168,8 +168,7 @@ const UserRecipe = () => {
            placeholder="Cuisine"
           value={cuisine}
           onChange={(e) => setCuisine(e.target.value)}
-          className="border  w-full
-           rounded  h-10 resize-none"
+           className="border w-full rounded-lg h-10 resize-none p-2 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
         />
 
         {/* image */}
@@ -184,20 +183,23 @@ const UserRecipe = () => {
               onChange={handleFileChange}
               className="hidden"
             />
-            <button
-              type="button"
-              onClick={() => inputRef.current?.click()}
-              className="bg-blue-500 text-white px-3 py-2 rounded"
-            >
-              Choose File
-            </button>
+            <div className="p-3 border-2 border-dashed border-gray-200 rounded-lg flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => inputRef.current?.click()}
+                className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:scale-105 transform transition"
+              >
+                Choose File
+              </button>
+              <span className="text-sm text-gray-700 truncate max-w-xs">{fileName || "No file chosen"}</span>
+            </div>
             <span className="text-sm text-gray-700 truncate max-w-xs">{fileName || "No file chosen"}</span>
             {uploading && <p className="text-sm text-gray-500">Uploading...</p>}
           </div>
 
           {image && (
             <div className="mt-2 mb-2">
-              <img src={image} alt="preview" className="w-40 h-40 object-cover rounded" />
+              <img src={image} alt="preview" className="w-40 h-40 object-cover rounded-lg shadow-md" />
             </div>
           )}
 
@@ -206,7 +208,7 @@ const UserRecipe = () => {
             placeholder="Or paste Image URL"
             value={image}
             onChange={(e) => setImage(e.target.value)}
-            className="border p-2 flex-1 rounded w-full mt-3"
+            className="border p-2 flex-1 rounded-lg w-full mt-3 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
           />
         </div>
         {/* time */}
@@ -215,8 +217,7 @@ const UserRecipe = () => {
            placeholder="Time"
           value={time}
           onChange={(e) => setTime(e.target.value)}
-          className="border  w-full
-           rounded  h-10 resize-none"
+           className="border w-full rounded-lg h-10 resize-none p-2 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
         />
         <input
           type="text"
@@ -232,7 +233,7 @@ const UserRecipe = () => {
           placeholder="Ingredients"
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
-          className="border p-2 w-full rounded  h-24 resize-none"
+          className="border p-2 w-full rounded-lg h-24 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
         />
 
         {/* Steps */}
@@ -241,13 +242,13 @@ const UserRecipe = () => {
           placeholder="Preparation Steps"
           value={steps}
           onChange={(e) => setSteps(e.target.value)}
-          className="border p-2 w-full h-28 rounded resize-none"
+          className="border p-2 w-full h-28 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
         />
 
         <div className="flex items-center gap-2">
           <button
             onClick={handleAdd}
-            className="bg-green-500 text-white px-4 py-2 rounded"
+            className="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-4 py-2 rounded-lg hover:scale-105 transform transition"
             disabled={uploading}
           >
             {uploading ? "Uploading..." : editingId ? "Update" : "Add"}
@@ -265,16 +266,26 @@ const UserRecipe = () => {
         myRecipes.map((recipe) => (
           <div
             key={recipe._id || recipe.id}
-            className="flex justify-between items-center border p-3 mb-2 rounded"
+            className="flex items-center gap-4 border p-4 mb-4 rounded-lg bg-white/60 shadow-sm hover:shadow-md hover:scale-[1.01] transform transition"
           >
-            <p>{recipe.name || recipe.title}</p>
+            <img
+              src={recipe.image || "https://via.placeholder.com/160x120?text=No+Image"}
+              alt={recipe.name}
+              className="w-28 h-20 object-cover rounded-md flex-shrink-0"
+            />
+
+            <div className="flex-1">
+              <p className="font-semibold text-lg">{recipe.name || recipe.title}</p>
+              <p className="text-sm text-gray-600 mt-1">{recipe.cuisine || "-"} • {recipe.diet || "-"} • {recipe.time || "-"}</p>
+            </div>
+
             <div className="flex gap-2">
-              <button onClick={() => handleEdit(recipe)} className="bg-blue-500 text-white px-3 py-1 rounded">
+              <button onClick={() => handleEdit(recipe)} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:opacity-95 transition">
                 Edit
               </button>
               <button
                 onClick={() => handleDelete(recipe)}
-                className="bg-red-500 text-white px-3 py-1 rounded"
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:opacity-95 transition"
               >
                 Delete
               </button>
@@ -282,7 +293,7 @@ const UserRecipe = () => {
           </div>
         ))
       ) : (
-        <p>No recipes yet.</p>
+        <p className="text-gray-600">No recipes yet.</p>
       )}
     </div>
   );

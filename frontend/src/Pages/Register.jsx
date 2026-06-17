@@ -27,12 +27,13 @@ const Register = () => {
     }
   };
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-rose-50 via-yellow-50 to-green-50">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-96"
+        className="w-96 bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/30"
       >
-        <h2 className="text-2xl font-bold- mb-4 text-center">Register</h2>
+        <h2 className="text-2xl font-extrabold mb-2 text-center text-emerald-700 tracking-wide">Create Account</h2>
+        <p className="text-sm text-center text-emerald-600 mb-4">Join our community and share your favorite recipes!</p>
         <input
           type="text"
           name="name"
@@ -44,7 +45,7 @@ const Register = () => {
               name: e.target.value,
             })
           }
-          className="w-full border p-2 mb-3 rounded"
+          className="w-full border p-2 mb-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
           required
         />
         <input
@@ -58,7 +59,7 @@ const Register = () => {
               email: e.target.value,
             })
           }
-          className="w-full border p-2 mb-3 rounded"
+          className="w-full border p-2 mb-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
           required
         />
         <input
@@ -71,12 +72,12 @@ const Register = () => {
               password: e.target.value,
             })
           }
-          className="w-full border p-2 mb-3 rounded"
+          className="w-full border p-2 mb-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200 transition"
           required
         />
         <button
           type="submit"
-          className="w-full bg-green-500 text-white py-2 rounded"
+          className="w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white py-2 rounded-lg hover:scale-[1.02] transform transition"
         >
           Register
         </button>

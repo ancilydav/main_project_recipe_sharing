@@ -31,19 +31,20 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-50 via-pink-50 to-yellow-50">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 shadow-md rounded w-80"
+        className="w-80 bg-white/85 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-white/30"
       >
-        <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
+        <h2 className="text-xl font-extrabold mb-3 text-center text-orange-600">Welcome Back</h2>
+        <p className="text-sm text-center text-orange-500 mb-4">Sign in to access your recipes and favourites</p>
 
         {/* email*/}
         <input
           type="email"
           placeholder="Enter Email"
           required
-          className="border p-2 w-full mb-3 rounded"
+          className="border p-2 w-full mb-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-200 transition"
           onChange={(e) => setFormdata({ ...formdata, email: e.target.value })}
         />
 
@@ -53,7 +54,7 @@ const Login = () => {
           type="password"
           placeholder="Enter Password"
           required
-          className="border p-2 w-full mb-3 rounded"
+          className="border p-2 w-full mb-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-200 transition"
           onChange={(e) =>
             setFormdata({ ...formdata, password: e.target.value })
           }
@@ -61,7 +62,7 @@ const Login = () => {
 
         <button
           type="submit"
-          className="bg-orange-500 text-white w-full p-2 rounded"
+          className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white p-2 rounded-lg hover:scale-[1.02] transform transition"
         >
           Login
         </button>
@@ -69,7 +70,7 @@ const Login = () => {
           Don't have an account?
           <span
             onClick={() => navigate("/register")}
-            className="text-blue-500 cursor-pointer ml-1"
+            className="text-indigo-600 cursor-pointer ml-1 font-semibold"
           >
             Register
           </span>
